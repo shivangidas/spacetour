@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) =>
       },
       nasa_id: {
         type: DataTypes.STRING(256),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       title: {
         type: DataTypes.STRING(256),
