@@ -9,9 +9,15 @@ $(document).ready(function() {
     }
   });
   $("#searchButton").click(function() {
-    let query = $("#searchQuery").val();
-    let url = "https://images-api.nasa.gov/search?q=";
-    fetch(url + query)
+    var query = $("#searchQuery").val();
+    query = query.replace(", ", " ").replace(",", " ");
+    var keywords = query.split(" ").join(",");
+    let url =
+      "https://images-api.nasa.gov/search?media_type=image&q=" +
+      query +
+      "&keywords=" +
+      keywords;
+    fetch(url)
       .then(response => {
         return response.json();
       })
@@ -27,6 +33,10 @@ $(document).ready(function() {
               var thumbnail = album.links[0].href;
               var title = album.data[0].title || "";
               var text = album.data[0].description || "";
+              if (text.length > 100) {
+                text = text.substr(0, 100) + " ...";
+              }
+
               var date_created = album.data[0].date_created || "";
               date_created = date_created.split("T")[0];
               html +=
