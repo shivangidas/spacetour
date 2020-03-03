@@ -4,6 +4,6 @@ module.exports = function(app, secureRoutes) {
   const path = require("path");
 
   app.get("/", (req, res) => {
-    res.send({ message: "test" });
+    res.render("index");
   });
 };

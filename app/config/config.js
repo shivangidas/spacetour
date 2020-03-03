@@ -1,3 +1,4 @@
+"use strict";
 const env = process.env.NODE_ENV || "dev"; // 'dev' or 'test'
 
 const dev = {
