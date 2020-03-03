@@ -38,7 +38,13 @@ $(document).ready(function() {
               var title = album.data[0].title || "";
               var text = album.data[0].description || "";
               if (text.length > 100) {
-                text = text.substr(0, 100) + " ...";
+                text =
+                  text.substr(0, 100) +
+                  '... <a href="" data-toggle="modal" data-target="#showMoreModal"  data-id="' +
+                  album.data[0].nasa_id +
+                  '"data-description="' +
+                  album.data[0].description +
+                  '">Show more</a >';
               }
 
               var date_created = album.data[0].date_created || "";
@@ -93,7 +99,13 @@ $(document).ready(function() {
             var title = image.title || "";
             var text = image.description || "";
             if (text.length > 100) {
-              text = text.substr(0, 100) + " ...";
+              text =
+                text.substr(0, 100) +
+                '... <a href="" data-toggle="modal" data-target="#showMoreModal" data-id="' +
+                image.nasa_id +
+                '"data-description="' +
+                image.description +
+                '">Show more</a >';
             }
 
             var date_created = image.date_created || "";
@@ -186,5 +198,16 @@ $(document).ready(function() {
         console.log(error);
       }
     }); /*ajax*/
+  });
+
+  $("#showMoreModal").on("show.bs.modal", function(event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var id = button.data("id"); // Extract info from data-* attributes
+    var description = button.data("description");
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find(".modal-title").text("NASA id: " + id);
+    modal.find(".modal-body .text_area").html(description);
   });
 });
