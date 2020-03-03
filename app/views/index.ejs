@@ -15,7 +15,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -35,10 +35,27 @@
   </head>
 
   <body>
-    <header>
+    <header class="container-fluid">
       <h1>Welcome to space!</h1>
     </header>
-    <section class="container"></section>
-    <section class="row" id="imageThumbnail"></section>
+    <section class="searchSection container-fluid">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="col-sm-10">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="searchQuery"
+              placeholder="Earth Apollo 11"
+            />
+          </div>
+        </div>
+        <button type="button" id="searchButton" class="btn btn-primary">
+          Search
+        </button>
+      </form>
+      <br />
+      <div class="row row-cols-1 row-cols-md-4" id="imageThumbnail"></div>
+    </section>
   </body>
 </html>
