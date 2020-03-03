@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>NASA instagram</title>
+    <title>Space Search</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -17,8 +17,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <!-- <link rel="stylesheet" type="text/css" href="css/normalize.css" /> -->
     <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
       crossorigin="anonymous"
     ></script>
     <script
@@ -36,7 +35,7 @@
 
   <body>
     <header class="container-fluid">
-      <h1>Welcome to space!</h1>
+      <h1>Welcome to space search!</h1>
     </header>
     <section class="searchSection container-fluid">
       <form class="form-inline">
@@ -50,12 +49,23 @@
             />
           </div>
         </div>
-        <button type="button" id="searchButton" class="btn btn-primary">
-          Search
+        <button type="button" id="searchButton" class="btn btn-primary btn-sm">
+          Search NASA repository
+        </button>
+
+        <button
+          type="button"
+          id="searchDBButton"
+          class="btn btn-success btn-sm ml-3"
+        >
+          Get images in DB
         </button>
       </form>
       <br />
-      <div class="row row-cols-2 row-cols-md-4" id="imageThumbnail"></div>
+      <div
+        class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4"
+        id="imageThumbnail"
+      ></div>
     </section>
   </body>
 </html>

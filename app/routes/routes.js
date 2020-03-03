@@ -2,8 +2,6 @@
 // const model = require("../models");
 const spacecontroller = require("../controllers/spacecontroller");
 module.exports = function(app, secureRoutes) {
-  const path = require("path");
-
   app.get("/", (req, res) => {
     res.render("index");
   });

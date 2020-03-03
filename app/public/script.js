@@ -10,6 +10,10 @@ $(document).ready(function() {
   });
   $("#searchButton").click(function() {
     var query = $("#searchQuery").val();
+    if (query.length == 0) {
+      alert("Type something...go on");
+      return;
+    }
     query = query.replace(", ", " ").replace(",", " ");
     var keywords = query.split(" ").join(",");
     let url =
@@ -51,7 +55,10 @@ $(document).ready(function() {
               html +=
                 '<div class="card-footer"> <small class="text-muted" >' +
                 date_created.toLocaleString() +
-                "</small ></div ></div></div>";
+                '</small > <button type="button" class="btn btn-success btn-sm saveImageButton" >Save</button><input type="hidden" value="' +
+                album.data[0].nasa_id +
+                '"/>';
+              html += "</div ></div ></div > ";
             }
           });
         } else {
@@ -65,5 +72,119 @@ $(document).ready(function() {
         // Do something for an error here
         console.log(err);
       });
+  });
+
+  //get db images
+  $("#searchDBButton").click(function() {
+    var url = "api/v1/image";
+    fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        var items = data.result;
+        console.log(data);
+        var html = "";
+        if (items.length > 0) {
+          items.forEach(image => {
+            html += ' <div class="col mb-4">';
+            html += '<div class="card">';
+            var thumbnail = image.link;
+            var title = image.title || "";
+            var text = image.description || "";
+            if (text.length > 100) {
+              text = text.substr(0, 100) + " ...";
+            }
+
+            var date_created = image.date_created || "";
+            date_created = date_created.split("T")[0];
+            html +=
+              "<img src='" +
+              thumbnail +
+              "' alt='" +
+              title +
+              "' class='responsive card-img-top'/>";
+            html += '<div class="card-body">';
+            html += '<h5 class="card-title">' + title + "</h5>";
+            html += '<p class="card-text">' + text + "</p></div>";
+            html +=
+              '<div class="card-footer"> <small class="text-muted" >' +
+              date_created +
+              '</small > <button type="button" class="btn btn-danger btn-sm deleteImageButton" >Delete</button><input type="hidden" value="' +
+              image.id +
+              '"/>';
+            html += "</div ></div ></div > ";
+          });
+        } else {
+          html =
+            "<div class='col' style='margin-top:10%;'><h3>You have not saved anything yet!</h3></div>";
+        }
+        var section = document.getElementById("imageThumbnail");
+        section.innerHTML = html;
+      })
+      .catch(err => {
+        // Do something for an error here
+        console.log(err);
+      });
+  });
+  $("#imageThumbnail").on("click", ".saveImageButton", function(event) {
+    event.preventDefault();
+    var nasa_id = $(this)
+      .siblings("input")
+      .val();
+    var url = "https://images-api.nasa.gov/search?nasa_id=" + nasa_id;
+    fetch(url)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        var values = data.collection.items[0].data[0];
+        var postdata = {
+          nasa_id: values.nasa_id,
+          title: values.title,
+          description: values.description || "",
+          center: values.center || "",
+          link: data.collection.items[0].links[0].href,
+          location: values.location || "",
+          date_created: values.date_created || ""
+        };
+        console.log(postdata);
+        $.ajax({
+          url: "/api/v1/image",
+          type: "POST",
+          data: postdata,
+          success: function(result) {
+            console.log("Saved");
+            console.log(result);
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        }); /*ajax*/
+      })
+      .catch(err => {
+        // Do something for an error here
+        console.log(err);
+      });
+  });
+  $("#imageThumbnail").on("click", ".deleteImageButton", function(event) {
+    event.preventDefault();
+    var id = $(this)
+      .siblings("input")
+      .val();
+    $.ajax({
+      url: "/api/v1/image/" + id,
+      type: "DELETE",
+
+      success: function(result) {
+        console.log("Deleted");
+        console.log(result);
+        $("#searchDBButton").trigger("click");
+      },
+      error: function(error) {
+        console.log(error);
+      }
+    }); /*ajax*/
   });
 });
