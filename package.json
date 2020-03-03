@@ -1,0 +1,40 @@
+{
+  "name": "spacetour",
+  "version": "1.0.0",
+  "description": "space images",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app/server.js",
+    "start": "node app/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivangidas/spacetour.git"
+  },
+  "keywords": [
+    "Node",
+    "SQlite",
+    "HTML",
+    "CSS"
+  ],
+  "author": "Shivangi Das",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivangidas/spacetour/issues"
+  },
+  "homepage": "https://github.com/shivangidas/spacetour#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^2.5.7",
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "path": "^0.12.7",
+    "sequelize": "^5.15.1",
+    "serve-favicon": "^2.4.5",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0"
+  }
+}
