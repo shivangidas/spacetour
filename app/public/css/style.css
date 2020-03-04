@@ -4,13 +4,14 @@ html {
 }
 
 header {
-  background-color: #ddd;
+  /* background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%); */
+  /* background-color: #ddd; */
   height: 60px;
-  box-shadow: 1px 1px 2px 1px #9ba5bd;
+  /* box-shadow: 1px 1px 2px 1px #9ba5bd; */
 }
 body {
-  margin-bottom: 70px;
-  background-image: linear-gradient(45deg, #93a5cf 0%, #e4efe9 100%);
+  margin-bottom: 40px;
+  /* background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%); */
 
   /* Margin bottom by footer height */
 }
@@ -19,12 +20,16 @@ footer {
   bottom: 0;
   width: 100%;
   background-color: #ddd;
-  height: 70px;
+  height: 40px;
   color: rgba(0, 0, 0, 0.55);
   /* Set the fixed height of the footer here */
 }
 .searchSection {
   margin-top: 10px;
+}
+.searchSection form {
+  box-shadow: 0px 0px 3px 1px #9ba5bd;
+  padding: 10px 10px;
 }
 .responsive {
   max-width: 100%;
@@ -36,6 +41,13 @@ footer {
 .card-body-2 {
   background-image: linear-gradient(120deg, #ecf1f3 0%, #cadbf7 100%);
 }
+.card-body {
+  background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+}
 .modal-header {
   background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+}
+.saveImageButton,
+.deleteImageButton {
+  float: right;
 }

@@ -30,7 +30,6 @@ $(document).ready(function() {
         console.log(data);
         var html = "";
         if (items.length > 0) {
-          var num = 2;
           items.forEach(album => {
             if (album && album.links && album.links[0].href) {
               html += ' <div class="col mb-4">';
@@ -49,7 +48,7 @@ $(document).ready(function() {
                   album.data[0].description.replace(/<\/?[^>]+>/gi, " ") +
                   '">Show more</a >';
               }
-              num = num == 1 ? 2 : 1;
+
               var date_created = album.data[0].date_created || "";
               date_created = date_created.split("T")[0];
               html +=
@@ -58,7 +57,7 @@ $(document).ready(function() {
                 "' alt='" +
                 title +
                 "' class='responsive card-img-top'/>";
-              html += '<div class="card-body card-body-' + num + '">';
+              html += '<div class="card-body">';
               html += '<h5 class="card-title">' + title + "</h5>";
               html += '<p class="card-text">' + text + "</p></div>";
               html +=
