@@ -30,23 +30,26 @@ $(document).ready(function() {
         console.log(data);
         var html = "";
         if (items.length > 0) {
+          var num = 2;
           items.forEach(album => {
             if (album && album.links && album.links[0].href) {
               html += ' <div class="col mb-4">';
               html += '<div class="card">';
               var thumbnail = album.links[0].href;
               var title = album.data[0].title || "";
-              var text = album.data[0].description || "";
+              var text =
+                album.data[0].description.replace(/<\/?[^>]+>/gi, " ") || "";
+
               if (text.length > 100) {
                 text =
                   text.substr(0, 100) +
                   '... <a href="" data-toggle="modal" data-target="#showMoreModal"  data-id="' +
                   album.data[0].nasa_id +
                   '"data-description="' +
-                  album.data[0].description +
+                  album.data[0].description.replace(/<\/?[^>]+>/gi, " ") +
                   '">Show more</a >';
               }
-
+              num = num == 1 ? 2 : 1;
               var date_created = album.data[0].date_created || "";
               date_created = date_created.split("T")[0];
               html +=
@@ -55,7 +58,7 @@ $(document).ready(function() {
                 "' alt='" +
                 title +
                 "' class='responsive card-img-top'/>";
-              html += '<div class="card-body">';
+              html += '<div class="card-body card-body-' + num + '">';
               html += '<h5 class="card-title">' + title + "</h5>";
               html += '<p class="card-text">' + text + "</p></div>";
               html +=
@@ -155,7 +158,7 @@ $(document).ready(function() {
         var postdata = {
           nasa_id: values.nasa_id,
           title: values.title,
-          description: values.description || "",
+          description: values.description.replace(/<\/?[^>]+>/gi, " ") || "",
           center: values.center || "",
           link: data.collection.items[0].links[0].href,
           location: values.location || "",
