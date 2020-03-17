@@ -15,7 +15,8 @@ const dev = {
       host: process.env.HOST || "127.0.0.1",
       storage: "./spacetour.sqlite"
     }
-  }
+  },
+  secret: process.env.SECRET || "secretKey"
 };
 const production = {
   //TODO

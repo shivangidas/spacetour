@@ -45,7 +45,7 @@ fs.readdirSync(__dirname)
   });
 
 // relationships/associations described here
-// require("./relations")(db);
+require("./relations")(db);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

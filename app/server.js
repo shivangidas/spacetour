@@ -6,7 +6,8 @@ const path = require("path");
 const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const models = require("./models");
-
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const route = require("./routes/routes");
 const config = require("./config/config");
 
@@ -38,6 +39,25 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 //app.use(favicon(path.join(__dirname, "public", "images", "image3.ico")));
+
+app.use(cookieParser());
+app.use(
+  session({
+    key: "user_sid",
+    secret: config.secret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 600000
+    }
+  })
+);
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+    res.clearCookie("user_sid");
+  }
+  next();
+});
 
 route(app, secureRoutes);
 
