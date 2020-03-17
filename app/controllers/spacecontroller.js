@@ -10,7 +10,8 @@ module.exports.addImage = function(req, res) {
     center: req.body.center,
     link: req.body.link,
     location: req.body.location,
-    date_created: req.body.date_created
+    date_created: req.body.date_created,
+    userId: req.session.user.id
   };
 
   model.space
@@ -57,7 +58,7 @@ module.exports.addImage = function(req, res) {
     });
 };
 module.exports.getImages = function(req, res, con) {
-  var filter = {};
+  var filter = { where: { userId: req.session.user.id } };
   if (req.params.nasa_id) {
     filter.where = {
       nasa_id: req.params.nasa_id
@@ -92,7 +93,8 @@ module.exports.deleteImage = function(req, res) {
   model.space
     .destroy({
       where: {
-        id: req.params.id
+        id: req.params.id,
+        userId: req.session.user.id
       }
     })
     .then(function(result) {

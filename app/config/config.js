@@ -29,7 +29,8 @@ const production = {
     database: process.env.DB_NAME || "localdb",
     user: process.env.DB_USER || "postgres",
     password: process.env.DB_PASS || "root"
-  }
+  },
+  secret: process.env.SECRET || "secretKey"
 };
 
 const config = { dev, production };
