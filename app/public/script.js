@@ -212,4 +212,38 @@ $(document).ready(function() {
     modal.find(".modal-title").text("NASA id: " + id);
     modal.find(".modal-body .text_area").html(description);
   });
+
+  //logout
+  $("#logout").click(function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: "/api/v1/logout",
+      type: "GET",
+      headers: { "x-access-token": sessionStorage.getItem("token") },
+      success: function(result) {
+        sessionStorage.setItem("token", result.token);
+        window.location.href = "../logout";
+      },
+      error: function(error) {
+        alert("You are not logged in!");
+        sessionStorage.removeItem("token");
+        window.location.href = "../logout";
+      }
+    });
+    /*$('#logout').attr('href','../logout');*/
+  });
+  $(".scrollToTop").hide();
+  $(window).scroll(function() {
+    if ($(this).scrollTop() > 100) {
+      $(".scrollToTop").fadeIn();
+    } else {
+      $(".scrollToTop").fadeOut();
+    }
+  });
+
+  //Click event to scroll to top
+  $(".scrollToTop").click(function() {
+    $("html, body").animate({ scrollTop: 0 }, 800);
+    return false;
+  });
 });
