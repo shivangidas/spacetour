@@ -36,17 +36,19 @@ $(document).ready(function() {
               html += '<div class="card">';
               var thumbnail = album.links[0].href;
               var title = album.data[0].title || "";
-              var text =
-                album.data[0].description.replace(/<\/?[^>]+>/gi, " ") || "";
+              if (album.data[0].description) {
+                var text =
+                  album.data[0].description.replace(/<\/?[^>]+>/gi, " ") || "";
 
-              if (text.length > 100) {
-                text =
-                  text.substr(0, 100) +
-                  '... <a href="" data-toggle="modal" data-target="#showMoreModal"  data-id="' +
-                  album.data[0].nasa_id +
-                  '"data-description="' +
-                  album.data[0].description.replace(/<\/?[^>]+>/gi, " ") +
-                  '">Show more</a >';
+                if (text.length > 100) {
+                  text =
+                    text.substr(0, 100) +
+                    '... <a href="" data-toggle="modal" data-target="#showMoreModal"  data-id="' +
+                    album.data[0].nasa_id +
+                    '"data-description="' +
+                    album.data[0].description.replace(/<\/?[^>]+>/gi, " ") +
+                    '">Show more</a >';
+                }
               }
 
               var date_created = album.data[0].date_created || "";
