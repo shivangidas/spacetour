@@ -6,5 +6,6 @@ TODO:
 
 - [ ] UI needs to be worked on
 - [x] login and signup api to return response instead of redirect
-- [ ] scroll up option
+- [x] scroll up option
 - [ ] prepared statements
+- [ ] snackbar

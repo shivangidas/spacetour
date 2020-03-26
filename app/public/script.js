@@ -173,6 +173,7 @@ $(document).ready(function() {
           success: function(result) {
             console.log("Saved");
             console.log(result);
+            snackBar("Saved");
           },
           error: function(error) {
             console.log(error);
@@ -254,4 +255,12 @@ $(document).ready(function() {
     event.preventDefault();
     window.history.back();
   });
+  function snackBar(message) {
+    var x = document.getElementById("snackbar");
+    x.className = "show";
+    x.innerHTML = message;
+    setTimeout(function() {
+      x.className = x.className.replace("show", "");
+    }, 3000);
+  }
 });
