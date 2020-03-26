@@ -9,9 +9,11 @@ $(document).ready(function() {
     }
   });
   $("#searchButton").click(function() {
+    $("#message").addClass("hidden");
     var query = $("#searchQuery").val();
     if (query.length == 0) {
-      alert("Type something...go on");
+      $("#message").text("Enter something in the input box");
+      $("#message").removeClass("hidden");
       return;
     }
     query = query.replace(", ", " ").replace(",", " ");
@@ -86,6 +88,7 @@ $(document).ready(function() {
 
   //get db images
   $("#searchDBButton").click(function() {
+    $("#message").addClass("hidden");
     var url = "api/v1/image";
     fetch(url)
       .then(response => {
@@ -171,18 +174,24 @@ $(document).ready(function() {
           type: "POST",
           data: postdata,
           success: function(result) {
-            console.log("Saved");
-            console.log(result);
+            // console.log("Saved");
+            // console.log(result);
             snackBar("Saved");
           },
           error: function(error) {
             console.log(error);
+            if (error.responseJSON && error.responseJSON.message) {
+              snackBar(error.responseJSON.message);
+            } else {
+              snackBar("Could not save. Internal Error.");
+            }
           }
         }); /*ajax*/
       })
       .catch(err => {
         // Do something for an error here
         console.log(err);
+        snackBar("Can't fetch from NASA api");
       });
   });
   $("#imageThumbnail").on("click", ".deleteImageButton", function(event) {
@@ -195,12 +204,12 @@ $(document).ready(function() {
       type: "DELETE",
 
       success: function(result) {
-        console.log("Deleted");
-        console.log(result);
+        snackBar("Deleted");
         $("#searchDBButton").trigger("click");
       },
       error: function(error) {
         console.log(error);
+        snackBar("Could not delete. Try again.");
       }
     }); /*ajax*/
   });

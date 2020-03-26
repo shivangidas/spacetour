@@ -61,8 +61,17 @@ app.use((req, res, next) => {
 
 route(app, secureRoutes);
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync().then(async () => {
+  try {
+    await models.sequelize.query(
+      'CREATE UNIQUE INDEX "unique_index" ON "space" ("nasa_id","userId");'
+    );
+  } catch (error) {
+    //do nothing
+  }
+
   //Start server
+
   var server = app.listen(config.server.port, config.server.host, function() {
     var host = server.address().address;
     var serverPort = server.address().port;
