@@ -9,3 +9,4 @@ TODO:
 - [x] scroll up option
 - [ ] prepared statements
 - [x] snackbar
+- [x] PNG: favicon through gimp- image background made transparent and resized for all favicon sizes. Also used in loginand signup pages

@@ -126,3 +126,8 @@ footer {
     opacity: 0;
   }
 }
+body.loginPage {
+  background-image: url("../images/android-chrome-512x512.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
