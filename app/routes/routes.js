@@ -20,15 +20,18 @@ module.exports = function(app, secureRoutes) {
       model.user
         .create({
           username: req.body.username,
-          email: req.body.email,
+          // email: req.body.email,
           password: req.body.password
         })
         .then(user => {
           req.session.user = user.dataValues;
-          res.redirect("/search");
+          res.status(200).send({ message: "signed up!" });
         })
         .catch(error => {
-          res.redirect("/signup");
+          console.log(error);
+          res
+            .status(404)
+            .send({ message: "Username already exists. Try another." });
         });
     });
 
@@ -46,13 +49,17 @@ module.exports = function(app, secureRoutes) {
         .findOne({ where: { username: username } })
         .then(function(user) {
           if (!user) {
-            res.redirect("/login");
+            res
+              .status(404)
+              .send({ message: "Username or password is incorrect." });
           } else if (password != user.password) {
-            res.redirect("/login");
+            res
+              .status(404)
+              .send({ message: "Username or password is incorrect." });
           } else {
             req.session.user = user.dataValues;
             //console.log(req.session.user.id);
-            res.redirect("/search");
+            res.status(200).send({ message: "go ahead" });
           }
         });
     });
@@ -87,4 +94,22 @@ module.exports = function(app, secureRoutes) {
   secureRoutes.get("/image/:nasa_id", spacecontroller.getImages);
   secureRoutes.post("/image", spacecontroller.addImage);
   secureRoutes.delete("/image/:id", spacecontroller.deleteImage);
+
+  // Handle 404
+  app.use(function(req, res) {
+    res.status(400).render("PageNotFound", {
+      errorCode: "404",
+      errorMessage: "Page Not Found"
+    });
+  });
+
+  // Handle 500
+  app.use(function(error, req, res, next) {
+    console.log(error);
+    res.status(500).render("PageNotFound", {
+      errorCode: "500",
+      errorMessage: "Internal Server Error",
+      error: error
+    });
+  });
 };

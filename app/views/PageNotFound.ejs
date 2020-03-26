@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include partials/head %>
+  </head>
+
+  <body>
+    <!-- content -->
+    <div class="container-fluid">
+      <section class="hero">
+        <div class="row" style="margin: 0;">
+          <div class="col-md-6 offset-sm-1">
+            <h1><%= errorCode %></h1>
+            <h2><%= errorMessage %></h2>
+            <strong>
+              You can
+              <a href="#" class="goBack">go back to where you were</a> or head
+              straight <a href="/search">to the Search Page</a> if you were
+              logged in.</strong
+            >
+          </div>
+        </div>
+      </section>
+    </div>
+    <!-- content -->
+    <footer class="container-fluid">
+      <% include partials/Footer %>
+    </footer>
+  </body>
+</html>

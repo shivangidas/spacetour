@@ -51,3 +51,13 @@ footer {
 .deleteImageButton {
   float: right;
 }
+.hidden {
+  display: none;
+}
+.messageLabel {
+  color: darkred;
+}
+.titleDiv {
+  background-image: linear-gradient(120deg, #cadbf7 0%, #ecf1f3 100%);
+  padding: 2% 2%;
+}

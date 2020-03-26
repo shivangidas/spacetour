@@ -4,46 +4,66 @@
     <% include partials/head %>
     <style type="text/css">
       body {
-        background-color: #b5cfe0;
+        background-color: #283448;
       }
     </style>
+    <script type="text/javascript" src="login.js"></script>
   </head>
 
   <body>
     <div class="container-fluid">
-      <div class="row">
+      <div class="row titleDiv">
         <div class="offset-sm-1 col-sm-6">
           <h1>Space Search</h1>
         </div>
       </div>
       <hr />
       <div class="row">
-        <div class="jumbotron offset-sm-1 col-sm-6 col-md-4">
+        <div class="jumbotron offset-sm-1 col-sm-8 col-md-6">
+          <h4>Create account</h4>
           <form action="/signup" method="post" class="form-horizontal">
+            <label class="hidden messageLabel" id="message">...</label>
             <div class="form-group row">
-              <label class="control-label col-sm-4">Username:</label>
+              <label class="control-label col-sm-3" for="username"
+                >Username:</label
+              >
               <div class="col-sm-8">
-                <input type="text" name="username" class="form-control" />
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  required
+                />
               </div>
             </div>
-            <div class="form-group row">
+            <!-- <div class="form-group row">
               <label class="control-label col-sm-4">Email:</label>
               <div class="col-sm-8">
-                <input type="text" name="email" class="form-control" />
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
               </div>
-            </div>
+            </div> -->
             <div class="form-group row">
-              <label class="control-label col-sm-4">Password:</label>
+              <label class="control-label col-sm-3" for="password"
+                >Password:</label
+              >
               <div class="col-sm-8">
-                <input type="password" name="password" class="form-control" />
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  required
+                />
               </div>
             </div>
             <div class="offset-sm-4 col-sm-8">
-              <input
-                class="btn btn-primary"
-                type="submit"
-                value="Sign Up"
-              />&nbsp;&nbsp;
+              <button class="btn btn-primary" type="button" id="signupButton">
+                Sign Up</button
+              >&nbsp;&nbsp;
               <a href="login">Log In</a>
             </div>
           </form>

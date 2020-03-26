@@ -248,4 +248,10 @@ $(document).ready(function() {
     $("html, body").animate({ scrollTop: 0 }, 800);
     return false;
   });
+
+  //go back in history
+  $(".goBack").click(function(event) {
+    event.preventDefault();
+    window.history.back();
+  });
 });
