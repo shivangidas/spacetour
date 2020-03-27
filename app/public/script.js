@@ -16,6 +16,7 @@ $(document).ready(function() {
       $("#message").removeClass("hidden");
       return;
     }
+    $("#loader").removeClass("hidden");
     query = query.replace(", ", " ").replace(",", " ");
     var keywords = query.split(" ").join(",");
     let url =
@@ -77,6 +78,7 @@ $(document).ready(function() {
           html =
             "<div class='col' style='margin-top:10%;'><h3>Nothing in the universe matched your search!</h3></div>";
         }
+        $("#loader").addClass("hidden");
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
       })
@@ -90,6 +92,7 @@ $(document).ready(function() {
   $("#searchDBButton").click(function() {
     $("#message").addClass("hidden");
     var url = "api/v1/image";
+    $("#loader").removeClass("hidden");
     fetch(url)
       .then(response => {
         return response.json();
@@ -138,6 +141,7 @@ $(document).ready(function() {
           html =
             "<div class='col' style='margin-top:10%;'><h3>You have not saved anything yet!</h3></div>";
         }
+        $("#loader").addClass("hidden");
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
       })
