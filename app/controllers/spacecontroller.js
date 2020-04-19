@@ -18,7 +18,7 @@ module.exports.addImage = function(req, res) {
     .create(postData)
     .then(function(results) {
       var response = {
-        status: 2005,
+        status: 2000,
         code: 200,
         description: "OK",
         message: "Successfully saved!",
@@ -110,7 +110,7 @@ module.exports.deleteImage = function(req, res) {
         res.status(404).send(response);
       } else {
         var response = {
-          status: 2006,
+          status: 2000,
           code: 200,
           description: "OK",
           message: "Successfully deleted!",

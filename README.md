@@ -1,15 +1,19 @@
-# spacetour
+# SpaceTour
 
 A NASA image search app
 
 To run:
 
-TODO:
+- npm install
+- npm start
 
-- [x] UI needs to be worked on
-- [x] login and signup api to return response instead of redirect
-- [x] scroll up option
-- [ ] prepared statements
-- [x] snackbar
-- [x] PNG: favicon through gimp- image background made transparent and resized for all favicon sizes. Also used in loginand signup pages
-- [x] SVG: made an svg loader from scratch. It's also animated!
+Features:
+
+- User management
+- Search images using keywords
+- Open details in a modal
+- Save/ Delete images
+- Display saved images
+- External API access (https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf)
+- APIs for CRUD operations
+- 404 handling
