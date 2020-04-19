@@ -9,6 +9,7 @@ const Op = Sequelize.Op; //remove the warning message
 // Database
 let sequelize;
 if (process.env.NODE_ENV == "production") {
+  //not used
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
     protocol: "postgres",
@@ -27,7 +28,7 @@ if (process.env.NODE_ENV == "production") {
       host: config.db.options.host,
       dialect: config.db.options.dialect,
       storage: config.db.options.storage,
-      logging: false, //the query that is logged in console. remove when debugging
+      logging: false,
       operatorsAliases: Op
     }
   );

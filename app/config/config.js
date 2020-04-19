@@ -18,8 +18,8 @@ const dev = {
   },
   secret: process.env.SECRET || "secretKey"
 };
+//to be tested
 const production = {
-  //TODO
   server: {
     host: process.env.HOST || "0.0.0.0",
     port: process.env.PORT || 4040

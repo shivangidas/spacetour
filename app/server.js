@@ -3,7 +3,6 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const models = require("./models");
 const session = require("express-session");
@@ -37,8 +36,6 @@ app.use(
 //Use EJS engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
-//app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 app.use(cookieParser());
 app.use(

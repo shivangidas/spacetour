@@ -2,6 +2,8 @@
 
 A NASA image search app
 
+To run:
+
 TODO:
 
 - [x] UI needs to be worked on
