@@ -1,19 +1,21 @@
 "use strict";
 
-$(document).ready(function() {
-  $('input[type="text"]').keypress(function(event) {
+$(document).ready(function () {
+  $('input[type="text"]').keypress(function (event) {
     var code = event.keyCode || event.which;
     if (code === 13) {
       event.preventDefault();
       $("#searchButton").trigger("click");
     }
   });
-  $("#searchButton").click(function() {
+  $("#searchButton").click(function () {
     $("#message").addClass("hidden");
     var query = $("#searchQuery").val();
     if (query.length == 0) {
       $("#message").text("Enter something in the input box");
       $("#message").removeClass("hidden");
+      var section = document.getElementById("imageThumbnail");
+      section.innerHTML = "";
       return;
     }
     $("#loader").removeClass("hidden");
@@ -25,15 +27,15 @@ $(document).ready(function() {
       "&keywords=" +
       keywords;
     fetch(url)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         var items = data.collection.items;
-        console.log(data);
+        // console.log(data);
         var html = "";
         if (items.length > 0) {
-          items.forEach(album => {
+          items.forEach((album) => {
             if (album && album.links && album.links[0].href) {
               html += ' <div class="col mb-4">';
               html += '<div class="card">';
@@ -82,27 +84,27 @@ $(document).ready(function() {
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
       })
-      .catch(err => {
+      .catch((err) => {
         // Do something for an error here
         console.log(err);
       });
   });
 
   //get db images
-  $("#searchDBButton").click(function() {
+  $("#searchDBButton").click(function () {
     $("#message").addClass("hidden");
     var url = "api/v1/image";
     $("#loader").removeClass("hidden");
     fetch(url)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         var items = data.result;
         console.log(data);
         var html = "";
         if (items.length > 0) {
-          items.forEach(image => {
+          items.forEach((image) => {
             html += ' <div class="col mb-4">';
             html += '<div class="card">';
             var thumbnail = image.link;
@@ -145,22 +147,20 @@ $(document).ready(function() {
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
       })
-      .catch(err => {
+      .catch((err) => {
         // Do something for an error here
         console.log(err);
       });
   });
-  $("#imageThumbnail").on("click", ".saveImageButton", function(event) {
+  $("#imageThumbnail").on("click", ".saveImageButton", function (event) {
     event.preventDefault();
-    var nasa_id = $(this)
-      .siblings("input")
-      .val();
+    var nasa_id = $(this).siblings("input").val();
     var url = "https://images-api.nasa.gov/search?nasa_id=" + nasa_id;
     fetch(url)
-      .then(response => {
+      .then((response) => {
         return response.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
         var values = data.collection.items[0].data[0];
         var postdata = {
@@ -170,55 +170,53 @@ $(document).ready(function() {
           center: values.center || "",
           link: data.collection.items[0].links[0].href,
           location: values.location || "",
-          date_created: values.date_created || ""
+          date_created: values.date_created || "",
         };
         console.log(postdata);
         $.ajax({
           url: "/api/v1/image",
           type: "POST",
           data: postdata,
-          success: function(result) {
+          success: function (result) {
             // console.log("Saved");
             // console.log(result);
             snackBar("Saved");
           },
-          error: function(error) {
+          error: function (error) {
             console.log(error);
             if (error.responseJSON && error.responseJSON.message) {
               snackBar(error.responseJSON.message);
             } else {
               snackBar("Could not save. Internal Error.");
             }
-          }
+          },
         }); /*ajax*/
       })
-      .catch(err => {
+      .catch((err) => {
         // Do something for an error here
         console.log(err);
         snackBar("Can't fetch from NASA api");
       });
   });
-  $("#imageThumbnail").on("click", ".deleteImageButton", function(event) {
+  $("#imageThumbnail").on("click", ".deleteImageButton", function (event) {
     event.preventDefault();
-    var id = $(this)
-      .siblings("input")
-      .val();
+    var id = $(this).siblings("input").val();
     $.ajax({
       url: "/api/v1/image/" + id,
       type: "DELETE",
 
-      success: function(result) {
+      success: function (result) {
         snackBar("Deleted");
         $("#searchDBButton").trigger("click");
       },
-      error: function(error) {
+      error: function (error) {
         console.log(error);
         snackBar("Could not delete. Try again.");
-      }
+      },
     }); /*ajax*/
   });
 
-  $("#showMoreModal").on("show.bs.modal", function(event) {
+  $("#showMoreModal").on("show.bs.modal", function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var id = button.data("id"); // Extract info from data-* attributes
     var description = button.data("description");
@@ -230,26 +228,26 @@ $(document).ready(function() {
   });
 
   //logout
-  $("#logout").click(function(event) {
+  $("#logout").click(function (event) {
     event.preventDefault();
     $.ajax({
       url: "/api/v1/logout",
       type: "GET",
       headers: { "x-access-token": sessionStorage.getItem("token") },
-      success: function(result) {
+      success: function (result) {
         sessionStorage.setItem("token", result.token);
         window.location.href = "../logout";
       },
-      error: function(error) {
+      error: function (error) {
         alert("You are not logged in!");
         sessionStorage.removeItem("token");
         window.location.href = "../logout";
-      }
+      },
     });
     /*$('#logout').attr('href','../logout');*/
   });
   $(".scrollToTop").hide();
-  $(window).scroll(function() {
+  $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
       $(".scrollToTop").fadeIn();
     } else {
@@ -258,13 +256,13 @@ $(document).ready(function() {
   });
 
   //Click event to scroll to top
-  $(".scrollToTop").click(function() {
+  $(".scrollToTop").click(function () {
     $("html, body").animate({ scrollTop: 0 }, 800);
     return false;
   });
 
   //go back in history
-  $(".goBack").click(function(event) {
+  $(".goBack").click(function (event) {
     event.preventDefault();
     window.history.back();
   });
@@ -272,7 +270,7 @@ $(document).ready(function() {
     var x = document.getElementById("snackbar");
     x.className = "show";
     x.innerHTML = message;
-    setTimeout(function() {
+    setTimeout(function () {
       x.className = x.className.replace("show", "");
     }, 3000);
   }
