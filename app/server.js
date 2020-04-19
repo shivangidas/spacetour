@@ -38,7 +38,7 @@ app.use(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-//app.use(favicon(path.join(__dirname, "public", "images", "image3.ico")));
+//app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
 app.use(cookieParser());
 app.use(
@@ -48,7 +48,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 600000,
+      maxAge: 86400000,
     },
   })
 );
