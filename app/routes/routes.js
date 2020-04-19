@@ -1,7 +1,7 @@
 "use strict";
 const model = require("../models");
 const spacecontroller = require("../controllers/spacecontroller");
-module.exports = function(app, secureRoutes) {
+module.exports = function (app, secureRoutes) {
   const path = require("path");
   var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
@@ -21,14 +21,14 @@ module.exports = function(app, secureRoutes) {
         .create({
           username: req.body.username,
           // email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
         })
-        .then(user => {
+        .then((user) => {
           req.session.user = user.dataValues;
           res.status(200).send({ message: "signed up!" });
         })
-        .catch(error => {
-          console.log(error);
+        .catch((error) => {
+          //console.log(error);
           res
             .status(404)
             .send({ message: "Username already exists. Try another." });
@@ -47,7 +47,7 @@ module.exports = function(app, secureRoutes) {
 
       model.user
         .findOne({ where: { username: username } })
-        .then(function(user) {
+        .then(function (user) {
           if (!user) {
             res
               .status(404)
@@ -64,7 +64,7 @@ module.exports = function(app, secureRoutes) {
         });
     });
 
-  app.get("/", function(req, res) {
+  app.get("/", function (req, res) {
     if (req.session.user && req.cookies.user_sid) {
       res.render("/index");
     } else {
@@ -105,20 +105,20 @@ module.exports = function(app, secureRoutes) {
   secureRoutes.delete("/image/:id", spacecontroller.deleteImage);
 
   // Handle 404
-  app.use(function(req, res) {
+  app.use(function (req, res) {
     res.status(404).render("PageNotFound", {
       errorCode: "404",
-      errorMessage: "Page Not Found"
+      errorMessage: "Page Not Found",
     });
   });
 
   // Handle 500
-  app.use(function(error, req, res, next) {
-    console.log(error);
+  app.use(function (error, req, res, next) {
+    // console.log(error);
     res.status(500).render("PageNotFound", {
       errorCode: "500",
       errorMessage: "Internal Server Error",
-      error: error
+      error: error,
     });
   });
 };

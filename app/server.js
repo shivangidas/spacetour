@@ -16,7 +16,7 @@ const secureRoutes = express.Router();
 app.use(express.static(path.join(__dirname, "public")));
 
 //Allow cross origin
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -29,7 +29,7 @@ app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(
   bodyParser.urlencoded({
     // to support URL-encoded bodies
-    extended: true
+    extended: true,
   })
 );
 
@@ -45,8 +45,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 86400000
-    }
+      maxAge: 86400000,
+    },
   })
 );
 app.use((req, res, next) => {
@@ -69,10 +69,15 @@ models.sequelize.sync().then(async () => {
 
   //Start server
 
-  var server = app.listen(config.server.port, config.server.host, function() {
+  var server = app.listen(config.server.port, config.server.host, function () {
     var host = server.address().address;
     var serverPort = server.address().port;
 
     console.log("Live at http://%s:%s", host, serverPort);
+    console.log(
+      "Use http://localhost:%s or http://<ipaddress>:%s if 0.0.0.0 doesn't work",
+      serverPort,
+      serverPort
+    );
   });
 });
