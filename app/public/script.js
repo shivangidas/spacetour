@@ -82,9 +82,17 @@ $(document).ready(function() {
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
       })
-      .catch(err => {
+      .catch(error => {
         // Do something for an error here
-        console.log(err);
+        //console.log(error);
+        if (error.responseJSON && error.responseJSON.message) {
+          snackBar(error.responseJSON.message);
+          if (error.responseJSON.message == "Logged out") {
+            window.location.href = "../logout";
+          }
+        } else {
+          snackBar("Internal Error.");
+        }
       });
   });
 
@@ -93,11 +101,10 @@ $(document).ready(function() {
     $("#message").addClass("hidden");
     var url = "api/v1/image";
     $("#loader").removeClass("hidden");
-    fetch(url)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function(data) {
         var items = data.result;
         console.log(data);
         var html = "";
@@ -144,11 +151,19 @@ $(document).ready(function() {
         $("#loader").addClass("hidden");
         var section = document.getElementById("imageThumbnail");
         section.innerHTML = html;
-      })
-      .catch(err => {
-        // Do something for an error here
-        console.log(err);
-      });
+      },
+      error: function(error) {
+        //console.log(error);
+        if (error.responseJSON && error.responseJSON.message) {
+          snackBar(error.responseJSON.message);
+          if (error.responseJSON.message == "Logged out") {
+            window.location.href = "../logout";
+          }
+        } else {
+          snackBar("Internal Error.");
+        }
+      }
+    });
   });
   $("#imageThumbnail").on("click", ".saveImageButton", function(event) {
     event.preventDefault();
@@ -186,6 +201,9 @@ $(document).ready(function() {
             console.log(error);
             if (error.responseJSON && error.responseJSON.message) {
               snackBar(error.responseJSON.message);
+              if (error.responseJSON.message == "Logged out") {
+                window.location.href = "../logout";
+              }
             } else {
               snackBar("Could not save. Internal Error.");
             }
@@ -212,8 +230,14 @@ $(document).ready(function() {
         $("#searchDBButton").trigger("click");
       },
       error: function(error) {
-        console.log(error);
-        snackBar("Could not delete. Try again.");
+        if (error.responseJSON && error.responseJSON.message) {
+          snackBar(error.responseJSON.message);
+          if (error.responseJSON.message == "Logged out") {
+            window.location.href = "../logout";
+          }
+        } else {
+          snackBar("Could not delete. Try again.");
+        }
       }
     }); /*ajax*/
   });

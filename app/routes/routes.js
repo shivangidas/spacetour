@@ -89,6 +89,15 @@ module.exports = function(app, secureRoutes) {
     }
   });
 
+  //check if user is logged in before calling internal apis
+  var sessionChecker1 = (req, res, next) => {
+    if (req.session.user && req.cookies.user_sid) {
+      next();
+    } else {
+      res.status(404).send({ message: "Logged out" });
+    }
+  };
+  secureRoutes.use(sessionChecker1);
   app.use("/api/v1", secureRoutes); //version control
   secureRoutes.get("/image", spacecontroller.getImages);
   secureRoutes.get("/image/:nasa_id", spacecontroller.getImages);
@@ -97,7 +106,7 @@ module.exports = function(app, secureRoutes) {
 
   // Handle 404
   app.use(function(req, res) {
-    res.status(400).render("PageNotFound", {
+    res.status(404).render("PageNotFound", {
       errorCode: "404",
       errorMessage: "Page Not Found"
     });
