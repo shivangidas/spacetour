@@ -1,11 +1,12 @@
-# SpaceTour
+# SpaceSearch
 
-A NASA image search app
+### A NASA image search app
 
 To run:
 
 - npm install
 - npm start
+- http://0.0.0.0:4040
 
 Features:
 
