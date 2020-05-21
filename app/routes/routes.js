@@ -2,7 +2,6 @@
 const model = require("../models");
 const spacecontroller = require("../controllers/spacecontroller");
 module.exports = function(app, secureRoutes) {
-  const path = require("path");
   var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
       res.redirect("/search");
